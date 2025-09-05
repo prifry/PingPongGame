@@ -245,26 +245,40 @@ gameLoop();
 // Touch controls for iPhone
 let touchStartX = null;
 
-document.getElementById('leftControl').addEventListener('touchstart', function(e) {
-    touchStartX = e.touches[0].clientX;
-    e.preventDefault();
+
+// Touch controls for iPhone (single listener)
+canvas.addEventListener('touchmove', function(e) {
+    if (gameOver) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+
+    // Get touch X relative to canvas
+    const touchX = (touch.clientX - rect.left) * (canvas.width / rect.width);
+
+    // Move paddle centered on finger
+    playerX = touchX - paddleWidth / 2;
+
+    // Keep paddle inside canvas
+    playerX = Math.max(0, Math.min(canvas.width - paddleWidth, playerX));
+
+    e.preventDefault(); // prevent scrolling
 }, { passive: false });
 
-document.getElementById('rightControl').addEventListener('touchstart', function(e) {
-    touchStartX = e.touches[0].clientX;
-    e.preventDefault();
-}, { passive: false });
+// Tap controls (left/right screen zones)
+const leftControl = document.getElementById('leftControl');
+const rightControl = document.getElementById('rightControl');
 
-document.getElementById('leftControl').addEventListener('touchmove', function(e) {
-    const touchX = e.touches[0].clientX;
-    playerX -= 30;
+leftControl.addEventListener('touchstart', function(e) {
+    if (gameOver) return;
+    playerX -= 40; // move left by 40px
     playerX = Math.max(0, Math.min(canvas.width - paddleWidth, playerX));
     e.preventDefault();
 }, { passive: false });
 
-document.getElementById('rightControl').addEventListener('touchmove', function(e) {
-    const touchX = e.touches[0].clientX;
-    playerX += 30;
+rightControl.addEventListener('touchstart', function(e) {
+    if (gameOver) return;
+    playerX += 40; // move right by 40px
     playerX = Math.max(0, Math.min(canvas.width - paddleWidth, playerX));
     e.preventDefault();
 }, { passive: false });
@@ -389,3 +403,4 @@ function playHitSound() {
     const audio = new Audio('418556__14fpanskabubik_lukas__ping-pong-hit.wav');
     audio.play();
 }
+
