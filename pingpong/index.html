@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="500" height="400"></canvas>
+        <div id="touchControls">
+            <div id="leftControl" class="control"></div>
+            <div id="rightControl" class="control"></div>
+        </div>
+        <button id="menuToggle" title="Show Menu">
+            &#9776;
+        </button>
+        <div id="buttonPanel" class="hidden">
+            <button id="startBtn">Start Game</button>
+            <button id="endBtn">End Game</button>
+            <button id="pauseBtn">Pause</button>
+            <button id="soundBtn">Sound: On</button>
+            <button id="settingsBtn">Settings</button>
+        </div>
+        <div id="scoreboard" style="display:none;">
+            <h2>Scoreboard</h2>
+            <div id="highScores"></div>
+        </div>
+        <div id="gameOverScreen" style="display:none;">
+            <h1 id="gameOverMessage"></h1>
+            <button id="restartBtn">Restart</button>
+        </div>
+        <div id="settingsMenu" style="display:none;">
+            <h2>Settings</h2>
+            <label>Difficulty:
+                <select id="difficultySelect">
+                    <option value="easy">Easy</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </label>
+            <label>Two Player:
+                <input type="checkbox" id="twoPlayerToggle">
+            </label>
+            <button id="closeSettingsBtn">Close</button>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
